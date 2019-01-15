@@ -31,12 +31,15 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
 
+//#include <QXYSeries> // for the example
+#include <QLineSeries> // for the example
+
 QT_CHARTS_USE_NAMESPACE
 
 ChartView::ChartView(QWidget *parent)
     : QChartView(new QChart(), parent),
-      m_scatter(0),
-      m_scatter2(0)
+      m_scatter(nullptr),
+      m_scatter2(nullptr)
 {
     setRenderHint(QPainter::Antialiasing);
 
@@ -53,11 +56,24 @@ ChartView::ChartView(QWidget *parent)
 
     chart()->addSeries(m_scatter2);
     chart()->addSeries(m_scatter);
+
+    connect(m_scatter, &QScatterSeries::clicked, this, &ChartView::handleClickedPoint);
+
+    // -----------------------------
+
+    qDebug() << "add QLineSeries here .."; // todom remove
+    QLineSeries* line = new QLineSeries(this); // just a simple line from bottom to 4
+    line->setName("draggable line");
+    line->setPen(QPen(QColor(Qt::red)));
+    line->append(1, 0);
+    line->append(1, 4);
+
+    chart()->addSeries(line);
+
+    //--------------
     chart()->createDefaultAxes();
     chart()->axisX()->setRange(0, 4.5);
     chart()->axisY()->setRange(0, 4.5);
-
-    connect(m_scatter, &QScatterSeries::clicked, this, &ChartView::handleClickedPoint);
 }
 
 ChartView::~ChartView()

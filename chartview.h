@@ -41,7 +41,7 @@ class ChartView : public QChartView
     Q_OBJECT
 
 public:
-    ChartView(QWidget *parent = 0);
+    ChartView(QWidget *parent = nullptr);
     ~ChartView();
 
 private Q_SLOTS:

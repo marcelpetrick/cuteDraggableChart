@@ -96,6 +96,12 @@ void ChartView::mouseMoveEvent(QMouseEvent *event)
     qDebug() << "mouseMoveEvent!";
     qDebug() << "localPos:" << event->localPos().x() << event->localPos().y();
     qDebug() << "widgetPos:" << event->x() << event->y();
+
+    // actually both yield the same result!
+
+    //! @attention for further action, read:
+    //! https://stackoverflow.com/questions/44067831/get-mouse-coordinates-in-qchartviews-axis-system/44078533#44078533
+
 }
 
 void ChartView::handleClickedPoint(const QPointF &point)

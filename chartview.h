@@ -44,6 +44,9 @@ public:
     ChartView(QWidget *parent = nullptr);
     ~ChartView();
 
+protected:
+    void mouseMoveEvent(QMouseEvent *event); // override
+
 private Q_SLOTS:
     void handleClickedPoint(const QPointF &point);
 

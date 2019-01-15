@@ -41,6 +41,13 @@ ChartView::ChartView(QWidget *parent)
       m_scatter(nullptr),
       m_scatter2(nullptr)
 {
+    // new idea: replace the current chart with a new one, which has replaced mouseEvent-handler
+    //QChart* newChart = new QChart();
+    //newChart->installEventFilter();
+    //setChart(newChart);
+
+    // end of new
+
     setRenderHint(QPainter::Antialiasing);
 
     chart()->setTitle("Click to interact with scatter points");
@@ -82,6 +89,13 @@ ChartView::ChartView(QWidget *parent)
 
 ChartView::~ChartView()
 {
+}
+
+void ChartView::mouseMoveEvent(QMouseEvent *event)
+{
+    qDebug() << "mouseMoveEvent!";
+    qDebug() << "localPos:" << event->localPos().x() << event->localPos().y();
+    qDebug() << "widgetPos:" << event->x() << event->y();
 }
 
 void ChartView::handleClickedPoint(const QPointF &point)

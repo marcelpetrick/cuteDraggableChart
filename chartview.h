@@ -47,6 +47,10 @@ public:
 private Q_SLOTS:
     void handleClickedPoint(const QPointF &point);
 
+    // stuff for 'repssed' and 'released'
+    void slotHandlePressed(const QPointF &point);
+    void slotHandleReleased(const QPointF &point);
+
 private:
     QScatterSeries *m_scatter;
     QScatterSeries *m_scatter2;

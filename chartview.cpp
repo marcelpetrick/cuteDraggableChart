@@ -65,10 +65,14 @@ ChartView::ChartView(QWidget *parent)
     QLineSeries* line = new QLineSeries(this); // just a simple line from bottom to 4
     line->setName("draggable line");
     line->setPen(QPen(QColor(Qt::red)));
-    line->append(1, 0);
-    line->append(1, 4);
+    line->append(1.2, 0.0);
+    line->append(1.2, 4.0);
 
     chart()->addSeries(line);
+
+    connect(line, &QLineSeries::pressed, this, &ChartView::slotHandlePressed);
+    connect(line, &QLineSeries::released, this, &ChartView::slotHandleReleased);
+    // todom add something for released
 
     //--------------
     chart()->createDefaultAxes();
@@ -101,4 +105,16 @@ void ChartView::handleClickedPoint(const QPointF &point)
     // Remove the closes point from series 1 and append it to series 2
     m_scatter->remove(closest);
     m_scatter2->append(closest);
+}
+
+void ChartView::slotHandlePressed(const QPointF &point)
+{
+    qDebug() << "slotHandlePressed:" << point;
+
+}
+
+void ChartView::slotHandleReleased(const QPointF &point)
+{
+    qDebug() << "slotHandleReleased:" << point;
+
 }

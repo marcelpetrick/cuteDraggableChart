@@ -93,15 +93,36 @@ ChartView::~ChartView()
 
 void ChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << "mouseMoveEvent!";
-    qDebug() << "localPos:" << event->localPos().x() << event->localPos().y();
-    qDebug() << "widgetPos:" << event->x() << event->y();
+    qDebug() << "-------------------------------------";
+    qDebug() << "### ChartView::mouseMoveEvent! ###";
+    //qDebug() << "localPos:" << event->localPos().x() << event->localPos().y();
+    //qDebug() << "widgetPos:" << event->x() << event->y();
 
     // actually both yield the same result!
 
     //! @attention for further action, read:
     //! https://stackoverflow.com/questions/44067831/get-mouse-coordinates-in-qchartviews-axis-system/44078533#44078533
 
+    auto const widgetPos = event->localPos();
+    auto const scenePos = mapToScene(QPoint(static_cast<int>(widgetPos.x()), static_cast<int>(widgetPos.y())));
+    auto const chartItemPos = chart()->mapFromScene(scenePos);
+    auto const valueGivenSeries = chart()->mapToValue(chartItemPos);
+
+    qDebug() << "widgetPos:" << widgetPos;
+    qDebug() << "scenePos:" << scenePos;
+    qDebug() << "chartItemPos:" << chartItemPos;
+    qDebug() << "valueGivenSeries:" << valueGivenSeries;
+
+    //## gives something like ##
+    //widgetPos: QPointF(942,114)
+    //scenePos: QPointF(942,114)
+    //chartItemPos: QPointF(942,114)
+    //valueGivenSeries: QPointF(1.34584,0.522989)
+
+    // todo connect to this signal and save it for further usage: like when pressed/released-signals are emitted, the lineSeries is moved
+    emit signalCursorChartPositionChanged(valueGivenSeries);
+
+    QChartView::mouseMoveEvent(event);
 }
 
 void ChartView::handleClickedPoint(const QPointF &point)

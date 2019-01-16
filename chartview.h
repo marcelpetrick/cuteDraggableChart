@@ -44,6 +44,9 @@ public:
     ChartView(QWidget *parent = nullptr);
     ~ChartView();
 
+    //! Emitted whenever the cursor is moved inside the chartView.
+    Q_SIGNAL void signalCursorChartPositionChanged(QPointF position);
+
 protected:
     void mouseMoveEvent(QMouseEvent *event); // override
 
